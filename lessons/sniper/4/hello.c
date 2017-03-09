@@ -6,6 +6,7 @@
 int main(int argc, char **argv)
 {
 	char buffer[64];
+	printf("%p", buffer);
 	gets(buffer);
 	return 0;
 }
