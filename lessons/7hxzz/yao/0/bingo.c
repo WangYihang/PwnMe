@@ -4,10 +4,10 @@ void bingo(){
 	system("/bin/sh");
 }
 
-int main(){
-	char buffer[0x40] = {0};
-	printf("Pwnme : ");
-	read(0, buffer, 0xFF);
-	printf("%s", buffer);
+int main() {
+	char buf[10] = {0};
+	puts("What's your name:");
+	read(0,buf,0xff);
+	printf("Hello %s",buf);
 	return 0;
 }
