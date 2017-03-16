@@ -1,0 +1,96 @@
+[ ] ->    0:   20                      .byte 0x20
+[!] ->    0:   21                      .byte 0x21
+["] ->    0:   22                      .byte 0x22
+[#] ->    0:   23                      .byte 0x23
+[$] ->    0:   24                      .byte 0x24
+[%] ->    0:   25                      .byte 0x25
+[&] ->    0:   26                      es
+['] ->    0:   27                      daa
+[(] ->    0:   28                      .byte 0x28
+[)] ->    0:   29                      .byte 0x29
+[*] ->    0:   2a                      .byte 0x2a
+[+] ->    0:   2b                      .byte 0x2b
+[,] ->    0:   2c                      .byte 0x2c
+[-] ->    0:   2d                      .byte 0x2d
+[.] ->    0:   2e                      cs
+[/] ->    0:   2f                      das
+[0] ->    0:   30                      .byte 0x30
+[1] ->    0:   31                      .byte 0x31
+[2] ->    0:   32                      .byte 0x32
+[3] ->    0:   33                      .byte 0x33
+[4] ->    0:   34                      .byte 0x34
+[5] ->    0:   35                      .byte 0x35
+[6] ->    0:   36                      ss
+[7] ->    0:   37                      aaa
+[8] ->    0:   38                      .byte 0x38
+[9] ->    0:   39                      .byte 0x39
+[:] ->    0:   3a                      .byte 0x3a
+[;] ->    0:   3b                      .byte 0x3b
+[<] ->    0:   3c                      .byte 0x3c
+[=] ->    0:   3d                      .byte 0x3d
+[>] ->    0:   3e                      ds
+[?] ->    0:   3f                      aas
+[@] ->    0:   40                      inc    eax
+[A] ->    0:   41                      inc    ecx
+[B] ->    0:   42                      inc    edx
+[C] ->    0:   43                      inc    ebx
+[D] ->    0:   44                      inc    esp
+[E] ->    0:   45                      inc    ebp
+[F] ->    0:   46                      inc    esi
+[G] ->    0:   47                      inc    edi
+[H] ->    0:   48                      dec    eax
+[I] ->    0:   49                      dec    ecx
+[J] ->    0:   4a                      dec    edx
+[K] ->    0:   4b                      dec    ebx
+[L] ->    0:   4c                      dec    esp
+[M] ->    0:   4d                      dec    ebp
+[N] ->    0:   4e                      dec    esi
+[O] ->    0:   4f                      dec    edi
+[P] ->    0:   50                      push   eax
+[Q] ->    0:   51                      push   ecx
+[R] ->    0:   52                      push   edx
+[S] ->    0:   53                      push   ebx
+[T] ->    0:   54                      push   esp
+[U] ->    0:   55                      push   ebp
+[V] ->    0:   56                      push   esi
+[W] ->    0:   57                      push   edi
+[X] ->    0:   58                      pop    eax
+[Y] ->    0:   59                      pop    ecx
+[Z] ->    0:   5a                      pop    edx
+[[] ->    0:   5b                      pop    ebx
+[\] ->    0:   5c                      pop    esp
+[]] ->    0:   5d                      pop    ebp
+[^] ->    0:   5e                      pop    esi
+[_] ->    0:   5f                      pop    edi
+[`] ->    0:   60                      pusha
+[a] ->    0:   61                      popa
+[b] ->    0:   62                      .byte 0x62
+[c] ->    0:   63                      .byte 0x63
+[d] ->    0:   64                      fs
+[e] ->    0:   65                      gs
+[f] ->    0:   66                      data16
+[g] ->    0:   67                      addr16
+[h] ->    0:   68                      .byte 0x68
+[i] ->    0:   69                      .byte 0x69
+[j] ->    0:   6a                      .byte 0x6a
+[k] ->    0:   6b                      .byte 0x6b
+[l] ->    0:   6c                      ins    BYTE PTR es:[edi],dx
+[m] ->    0:   6d                      ins    DWORD PTR es:[edi],dx
+[n] ->    0:   6e                      outs   dx,BYTE PTR ds:[esi]
+[o] ->    0:   6f                      outs   dx,DWORD PTR ds:[esi]
+[p] ->    0:   70                      .byte 0x70
+[q] ->    0:   71                      .byte 0x71
+[r] ->    0:   72                      .byte 0x72
+[s] ->    0:   73                      .byte 0x73
+[t] ->    0:   74                      .byte 0x74
+[u] ->    0:   75                      .byte 0x75
+[v] ->    0:   76                      .byte 0x76
+[w] ->    0:   77                      .byte 0x77
+[x] ->    0:   78                      .byte 0x78
+[y] ->    0:   79                      .byte 0x79
+[z] ->    0:   7a                      .byte 0x7a
+[{] ->    0:   7b                      .byte 0x7b
+[|] ->    0:   7c                      .byte 0x7c
+[}] ->    0:   7d                      .byte 0x7d
+[~] ->    0:   7e                      .byte 0x7e
+[] ->    0:   7f                      .byte 0x7f
