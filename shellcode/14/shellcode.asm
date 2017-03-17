@@ -10,12 +10,18 @@ _start:
 
 	decrypt:
 		mov    ah, [esi]
-		mov    bl, [esi+0x1]
-		sub    bl,0x41
+		mov    al, [esi+0x1]
+		sub    al,0x41
 		sub    ah,0x41
 		shl    ah,0x4
-		add    bl,ah
-		mov    [edi],bl
+		xor    ebx,ebx
+		mov    bl, 90H ; set bl = (nop)
+		shl    ebx, 8
+		xor    edx,edx
+		mov    bl,al
+		mov    dl,ah
+		add    ebx,edx
+		mov    [edi],bx
 		inc    esi
 		inc    esi
 		inc    edi
