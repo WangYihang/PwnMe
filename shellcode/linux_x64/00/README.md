@@ -1,8 +1,8 @@
 简介 : 
 ```
-另一种加密方式加密的 shellcode
+汇编 Hello world!
 ```
 环境 : 
 ```
-Linux_x86
+Linux_x64
 ```
