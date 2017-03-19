@@ -1,4 +1,4 @@
-main:main.c
-	gcc -g -fno-stack-protector -o main main.c
+bingo:bingo.c
+	gcc -g -fno-stack-protector -o bingo bingo.c
 clean:
-	rm ./main
+	rm ./bingo
