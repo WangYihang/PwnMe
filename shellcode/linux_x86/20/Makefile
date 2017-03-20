@@ -7,3 +7,4 @@ encrypt:encrypt.c
 clean:
 	rm ./shellcode.o
 	rm ./shellcode
+	rm ./encrypt
