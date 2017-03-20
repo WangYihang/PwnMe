@@ -40,15 +40,18 @@ unsigned char *getMIN(unsigned char *a, unsigned char *b, unsigned char *c){
 struct RESULT_BYTE * searchByte(unsigned char target, unsigned char LEFT, unsigned char RIGHT){
 	unsigned char LEFT_A = LEFT;
 	unsigned char RIGHT_A = RIGHT;
-	unsigned char a = LEFT_A + (RIGHT_A - LEFT_A) / 2;
+	//unsigned char a = LEFT_A + (RIGHT_A - LEFT_A) / 2;
+	unsigned char a = LEFT_A;// + (RIGHT_A - LEFT_A) / 2;
 
 	unsigned char LEFT_B = LEFT;
 	unsigned char RIGHT_B = RIGHT;
-	unsigned char b = LEFT_B + (RIGHT_B - LEFT_B) / 2;
+	//unsigned char b = LEFT_B + (RIGHT_B - LEFT_B) / 2;
+	unsigned char b = LEFT_B;// + (RIGHT_B - LEFT_B) / 2;
 
 	unsigned char LEFT_C = LEFT;
 	unsigned char RIGHT_C = RIGHT;
-	unsigned char c = LEFT_C + (RIGHT_C - LEFT_C) / 2;
+	//unsigned char c = LEFT_C + (RIGHT_C - LEFT_C) / 2;
+	unsigned char c = LEFT_C;// + (RIGHT_C - LEFT_C) / 2;
 
 	int counter = 0;
 
@@ -181,9 +184,9 @@ int main(){
 //	int target = 0x761c95f5;
 //	int target = 0xd09d9692;
 //	 int target = 0xd08c9798;
-//	 int target = 0x36ae97d1;
+	 int target = 0x36ae97d1;
 //	 int target = 0x6f6f6fcf;
-	 int target = 0x6f6f6f70;
+	 //int target = 0x6f6f6f70;
 
 	struct RESULT * result = search(target);
 	printf("[Target] : 0x%x\n", target);
