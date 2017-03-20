@@ -83,6 +83,6 @@ int search(int target){
 
 int main(){
 		
-	search(0x5899cd80);
+	search(0x12345678);
 	return 0;
 }

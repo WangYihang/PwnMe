@@ -59,12 +59,6 @@ int sum(char a, char b, char c, char d){
 }
 
 void search(int target, char LEFT, char RIGHT, int MAX_TIMES){
-		int RIGHT_A = 0x7f7f7f7f;
-		int LEFT_A = 0x20202020;
-		int RIGHT_B = 0x7f7f7f7f;
-		int LEFT_B = 0x20202020;
-		int RIGHT_C = 0x7f7f7f7f;
-		int LEFT_C = 0x20202020;
 
 		char LEFT_A_a = 0x20;
 		char LEFT_A_b = 0x20;
@@ -94,126 +88,230 @@ void search(int target, char LEFT, char RIGHT, int MAX_TIMES){
 		char RIGHT_C_d = 0x7f;
 
 
-		int a = LEFT_A + (RIGHT_A - LEFT_A) / 2;
-		int b = LEFT_B + (RIGHT_B - LEFT_B) / 2;
-		int c = LEFT_C + (RIGHT_C - LEFT_C) / 2;
+		int a = 0x4f4f4f4f;
+		int b = 0x4f4f4f4f;
+		int c = 0x4f4f4f4f;
 
-		int times = 0;
 
 		int *pointer;
+		int counter = 0;
 
-		while(1){
-				if (times++ > MAX_TIMES){break;}
-				printf("[TIMES] : [%d]\n", times);
+		while(counter++ < 0xFF){
 
-				// printf("[0x%8x] [0x%8x] [0x%8x]\n", a, b, c);
+				printf("[0x%8x] [0x%8x] [0x%8x]\n", a, b, c);
 
-				int temp = (a + b + c) % 0x100000000;
-				// printf("[%x] <--> [%x]", temp, target);
+				unsigned int temp = (a + b + c) % (0x100000000);
+
 
 				if (temp > target){
-						// printf("大于了\n");
+						printf("[%x] > [%x]\n", temp, target);
 						pointer = getMAX_ABC(&a, &b, &c);
 						if (pointer == &a){
-
 								// 这里不能简单二分
 								// 需要先找出四个字节中最大的 , 然后将其二分
-								char *A_a = (&a + 0); // 这里也不能直接使用 pointer 这个指针 , 因为指针运算是以其自身尺寸(4 Bytes)作为单位的
-								char *A_b = (&a + 1);
-								char *A_c = (&a + 2);
-								char *A_d = (&a + 3);
+								char _A_a = (char)(a >> 24); // 最高位字节
+								char _A_b = (char)(a >> 16);
+								char _A_c = (char)(a >> 8);
+								char _A_d = (char)(a >> 0);
+								char *A_a = &_A_a;
+								char *A_b = &_A_b;
+								char *A_c = &_A_c;
+								char *A_d = &_A_d;
 								char *A_MAX = getMAX(A_a, A_b, A_c, A_d);
 								if (A_MAX == A_a){
 										RIGHT_A_a = *A_MAX;
 										*A_MAX = LEFT_A_a + (RIGHT_A_a - LEFT_A_a) / 2;
+										printf("[%d] ----- [%d]", LEFT_A_a, RIGHT_A_a);
 								}else if (A_MAX == A_b){
 										RIGHT_A_b = *A_MAX;
 										*A_MAX = LEFT_A_b + (RIGHT_A_b - LEFT_A_b) / 2;
+										printf("[%d] ----- [%d]", LEFT_A_b, RIGHT_A_b);
 								}else if (A_MAX == A_c){
 										RIGHT_A_c = *A_MAX;
 										*A_MAX = LEFT_A_c + (RIGHT_A_c - LEFT_A_c) / 2;
+										printf("[%d] ----- [%d]", LEFT_A_c, RIGHT_A_c);
 								}else if (A_MAX == A_d){
 										RIGHT_A_d = *A_MAX;
 										*A_MAX = LEFT_A_d + (RIGHT_A_d - LEFT_A_d) / 2;
+										printf("[%d] ----- [%d]", LEFT_A_d, RIGHT_A_d);
 								}else{
-								
+
 								}
+								// 重新构建 a
+								a = _A_a * 0x1000000 + _A_b * 0x10000 + _A_c * 0x100 + _A_d;
 								// printf("[NUMBER_A][MAX] -> a , [] = %8x\n", *a_max);
 						}else if (pointer == &b){
-								char *B_a = (&b + 0); // 这里也不能直接使用 pointer 这个指针 , 因为指针运算是以其自身尺寸(4 Bytes)作为单位的
-								char *B_b = (&b + 1);
-								char *B_c = (&b + 2);
-								char *B_d = (&b + 3);
+								char _B_a = (char)(b >> 24); // 最高位字节
+								char _B_b = (char)(b >> 16);
+								char _B_c = (char)(b >> 8);
+								char _B_d = (char)(b >> 0);
+								char *B_a = &_B_a;
+								char *B_b = &_B_b;
+								char *B_c = &_B_c;
+								char *B_d = &_B_d;
 								char *B_MAX = getMAX(B_a, B_b, B_c, B_d);
 								if (B_MAX == B_a){
 										RIGHT_B_a = *B_MAX;
 										*B_MAX = LEFT_B_a + (RIGHT_B_a - LEFT_B_a) / 2;
+										printf("[%d] ----- [%d]", LEFT_B_a, RIGHT_B_a);
 								}else if (B_MAX == B_b){
 										RIGHT_B_b = *B_MAX;
 										*B_MAX = LEFT_B_b + (RIGHT_B_b - LEFT_B_b) / 2;
+										printf("[%d] ----- [%d]", LEFT_B_b, RIGHT_B_b);
 								}else if (B_MAX == B_c){
 										RIGHT_B_c = *B_MAX;
 										*B_MAX = LEFT_B_c + (RIGHT_B_c - LEFT_B_c) / 2;
+										printf("[%d] ----- [%d]", LEFT_B_c, RIGHT_B_c);
 								}else if (B_MAX == B_d){
 										RIGHT_B_d = *B_MAX;
 										*B_MAX = LEFT_B_d + (RIGHT_B_d - LEFT_B_d) / 2;
+										printf("[%d] ----- [%d]", LEFT_B_d, RIGHT_B_d);
 								}else{
-								
+
 								}
+								b = _B_a * 0x1000000 + _B_b * 0x10000 + _B_c * 0x100 + _B_d;
 						}else if (pointer == &c){
-								char *C_a = (&c + 0); // 这里也不能直接使用 pointer 这个指针 , 因为指针运算是以其自身尺寸(4 Bytes)作为单位的
-								char *C_b = (&c + 1);
-								char *C_c = (&c + 2);
-								char *C_d = (&c + 3);
+								char _C_a = (char)(c >> 24); // 最高位字节
+								char _C_b = (char)(c >> 16);
+								char _C_c = (char)(c >> 8);
+								char _C_d = (char)(c >> 0);
+								char *C_a = &_C_a;
+								char *C_b = &_C_b;
+								char *C_c = &_C_c;
+								char *C_d = &_C_d;
 								char *C_MAX = getMAX(C_a, C_b, C_c, C_d);
 								if (C_MAX == C_a){
 										RIGHT_C_a = *C_MAX;
 										*C_MAX = LEFT_C_a + (RIGHT_C_a - LEFT_C_a) / 2;
+										printf("[%d] ----- [%d]", LEFT_C_a, RIGHT_C_a);
 								}else if (C_MAX == C_b){
 										RIGHT_C_b = *C_MAX;
 										*C_MAX = LEFT_C_b + (RIGHT_C_b - LEFT_C_b) / 2;
+										printf("[%d] ----- [%d]", LEFT_C_b, RIGHT_C_b);
 								}else if (C_MAX == C_c){
 										RIGHT_C_c = *C_MAX;
 										*C_MAX = LEFT_C_c + (RIGHT_C_c - LEFT_C_c) / 2;
+										printf("[%d] ----- [%d]", LEFT_C_c, RIGHT_C_c);
 								}else if (C_MAX == C_d){
 										RIGHT_C_d = *C_MAX;
 										*C_MAX = LEFT_C_d + (RIGHT_C_d - LEFT_C_d) / 2;
+										printf("[%d] ----- [%d]", LEFT_C_d, RIGHT_C_d);
 								}else{
-								
+
 								}
+								c = _C_a * 0x1000000 + _C_b * 0x10000 + _C_c * 0x100 + _C_d;
 						}else{
-							printf("指针异常.");
-							exit(1);
+								printf("指针异常.");
+								exit(1);
 						}
 				}else if (temp < target){
+						printf("[%x] < [%x]\n", temp, target);
 						pointer = getMIN_ABC(&a, &b, &c);
 						if (pointer == &a){
-								printf("MIN -> A , [A] = %8x\n", *pointer);
-								LEFT_A = a;
-								a = LEFT_A + (RIGHT_A - LEFT_A) / 2;
+								char _A_a = (char)(a >> 24); // 最高位字节
+								char _A_b = (char)(a >> 16);
+								char _A_c = (char)(a >> 8);
+								char _A_d = (char)(a >> 0);
+								char *A_a = &_A_a;
+								char *A_b = &_A_b;
+								char *A_c = &_A_c;
+								char *A_d = &_A_d;
+								char *A_MIN = getMIN(A_a, A_b, A_c, A_d);
+								if (A_MIN == A_a){
+										LEFT_A_a = *A_MIN;
+										*A_MIN = LEFT_A_a + (RIGHT_A_a - LEFT_A_a) / 2;
+										printf("[%d] ----- [%d]", LEFT_A_a, RIGHT_A_a);
+								}else if (A_MIN == A_b){
+										LEFT_A_b = *A_MIN;
+										*A_MIN = LEFT_A_b + (RIGHT_A_b - LEFT_A_b) / 2;
+										printf("[%d] ----- [%d]", LEFT_A_b, RIGHT_A_b);
+								}else if (A_MIN == A_c){
+										LEFT_A_c = *A_MIN;
+										*A_MIN = LEFT_A_c + (RIGHT_A_c - LEFT_A_c) / 2;
+										printf("[%d] ----- [%d]", LEFT_A_c, RIGHT_A_c);
+								}else if (A_MIN == A_d){
+										LEFT_A_d = *A_MIN;
+										*A_MIN = LEFT_A_d + (RIGHT_A_d - LEFT_A_d) / 2;
+										printf("[%d] ----- [%d]", LEFT_A_d, RIGHT_A_d);
+								}else{
+
+								}
+								a = _A_a * 0x1000000 + _A_b * 0x10000 + _A_c * 0x100 + _A_d;
 						}else if (pointer == &b){
-								printf("MIN -> B , [B] = %8x\n", *pointer);
-								LEFT_B = *pointer;
-								*pointer = LEFT_B + (RIGHT_B - LEFT_B) / 2;
+								char _B_a = (char)(b >> 24); // 最高位字节
+								char _B_b = (char)(b >> 16);
+								char _B_c = (char)(b >> 8);
+								char _B_d = (char)(b >> 0);
+								char *B_a = &_B_a;
+								char *B_b = &_B_b;
+								char *B_c = &_B_c;
+								char *B_d = &_B_d;
+								char *B_MIN = getMIN(B_a, B_b, B_c, B_d);
+								if (B_MIN == B_a){
+										LEFT_B_a = *B_MIN;
+										*B_MIN = LEFT_B_a + (RIGHT_B_a - LEFT_B_a) / 2;
+										printf("[%d] ----- [%d]", LEFT_B_a, RIGHT_B_a);
+								}else if (B_MIN == B_b){
+										LEFT_B_b = *B_MIN;
+										*B_MIN = LEFT_B_b + (RIGHT_B_b - LEFT_B_b) / 2;
+										printf("[%d] ----- [%d]", LEFT_B_b, RIGHT_B_b);
+								}else if (B_MIN == B_c){
+										LEFT_B_c = *B_MIN;
+										*B_MIN = LEFT_B_c + (RIGHT_B_c - LEFT_B_c) / 2;
+										printf("[%d] ----- [%d]", LEFT_B_c, RIGHT_B_c);
+								}else if (B_MIN == B_d){
+										LEFT_B_d = *B_MIN;
+										*B_MIN = LEFT_B_d + (RIGHT_B_d - LEFT_B_d) / 2;
+										printf("[%d] ----- [%d]", LEFT_B_d, RIGHT_B_d);
+								}else{
+
+								}
+								b = _B_a * 0x1000000 + _B_b * 0x10000 + _B_c * 0x100 + _B_d;
 						}else if (pointer == &c){
-								printf("MIN -> B , [B] = %8x\n", *pointer);
-								LEFT_C = *pointer;
-								*pointer = LEFT_C + (RIGHT_C - LEFT_C) / 2;
+								char _C_a = (char)(c >> 24); // 最高位字节
+								char _C_b = (char)(c >> 16);
+								char _C_c = (char)(c >> 8);
+								char _C_d = (char)(c >> 0);
+								char *C_a = &_C_a;
+								char *C_b = &_C_b;
+								char *C_c = &_C_c;
+								char *C_d = &_C_d;
+								char *C_MIN = getMIN(C_a, C_b, C_c, C_d);
+								if (C_MIN == C_a){
+										LEFT_C_a = *C_MIN;
+										*C_MIN = LEFT_C_a + (RIGHT_C_a - LEFT_C_a) / 2;
+										printf("[%d] ----- [%d]", LEFT_C_a, RIGHT_C_a);
+								}else if (C_MIN == C_b){
+										LEFT_C_b = *C_MIN;
+										*C_MIN = LEFT_C_b + (RIGHT_C_b - LEFT_C_b) / 2;
+										printf("[%d] ----- [%d]", LEFT_C_b, RIGHT_C_b);
+								}else if (C_MIN == C_c){
+										LEFT_C_c = *C_MIN;
+										*C_MIN = LEFT_C_c + (RIGHT_C_c - LEFT_C_c) / 2;
+										printf("[%d] ----- [%d]", LEFT_C_c, RIGHT_C_c);
+								}else if (C_MIN == C_d){
+										LEFT_C_d = *C_MIN;
+										*C_MIN = LEFT_C_d + (RIGHT_C_d - LEFT_C_d) / 2;
+										printf("[%d] ----- [%d]", LEFT_C_d, RIGHT_C_d);
+								}else{
+
+								}
+								c = _C_a * 0x1000000 + _C_b * 0x10000 + _C_c * 0x100 + _C_d;
 						}else{
-							printf("指针异常.");
-							exit(1);
+								printf("指针异常.");
+								exit(1);
 						}
 
 				}else{
+						printf("[%x] = [%x]", temp, target);
 						printf("[FOUND] : [0x%8x] [0x%8x] [0x%8x]\n", a, b, c);
-						printf("[TIMES] : [%d]\n", times);
 						break;
 				}	
 		}
 }
 
 int main(){	
-		search(0x5899cd80, 0x20, 0x7f, 0xFF);
+		search(0x87654321, 0x20, 0x7f, 0xFF);
 		// printf("%8x", sum(0x12, 0x23, 0x43, 0xff));
 		return 0;
 }
