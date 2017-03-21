@@ -1,2 +1,3 @@
-break /home/sun/pwnme/shellcode/linux_x86/21/encrypt.c:168
+break /home/sun/pwnme/shellcode/linux_x86/21/encrypt.c:252
+break /home/sun/pwnme/shellcode/linux_x86/21/encrypt.c:253
 
