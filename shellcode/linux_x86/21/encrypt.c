@@ -195,13 +195,13 @@ int main(){
  * '6f6f6f70L'
  */
 
-//	int target = 0x7f3266a8;
+	int target = 0x7f3266a8;
 //	int target = 0xf4951c77;
 //	int target = 0x91969dd1;
 //	int target = 0x97978cd1;
 //	int target = 0xd097ae37;
 //	int target = 0xce6f6f70;
-	int target = 0x6f6f6f70;
+//	int target = 0x6f6f6f70;
 
 	struct RESULT * result = search(target);
 	printf("[Target] : 0x%x\n", target);
