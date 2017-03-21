@@ -5,7 +5,9 @@
 经验 : 
 ```
 (发现一个经验 , 如果需要反复对内存进行 malloc/free 操作的时候 , malloc后要 memset(pointer, 0 , size))
-参考文章 : http://blog.csdn.net/baijd_ss/article/details/6741855
+关于 C 堆内存分配 , 可以参考文章 : 
+http://blog.csdn.net/baijd_ss/article/details/6741855
+http://blog.csdn.net/ermuzhi/article/details/7833701
 ```
 环境 : 
 ```
