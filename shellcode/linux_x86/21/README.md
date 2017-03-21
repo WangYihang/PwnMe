@@ -1,6 +1,11 @@
 简介 : 
 ```
-可打印字符(发现一个经验 , 如果需要反复对内存进行 malloc/free 操作的时候 , malloc后要 memset(pointer, 0 , size))
+可打印字符
+```
+经验 : 
+```
+(发现一个经验 , 如果需要反复对内存进行 malloc/free 操作的时候 , malloc后要 memset(pointer, 0 , size))
+参考文章 : http://blog.csdn.net/baijd_ss/article/details/6741855
 ```
 环境 : 
 ```
