@@ -1,2 +1,2 @@
-break *_start
+break /home/sun/pwnme/shellcode/linux_x86/21/encrypt.c:111
 

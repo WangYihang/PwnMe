@@ -58,25 +58,32 @@ struct RESULT_BYTE * searchByte(unsigned char target, unsigned char LEFT, unsign
 	while(counter++ < 0xFF){
 		// printf("[TIMES] : [%x]\t", counter);
 		// printf("[%d] [%d] [%d]\n", a, b, c);
-		unsigned char temp = (a + b + c) % 0x100; // 计算和
+		unsigned char temp = (a + b + c); // 计算和
 		unsigned char *pointer;
-		if (temp > target){
-			pointer = getMAX(&a, &b, &c);	
-			*pointer = *pointer + 1;
-		}else if(temp < target){
-			pointer = getMIN(&a, &b, &c);	
-			*pointer = *pointer + 1;
-		}else{
-			struct RESULT_BYTE * result = malloc(sizeof(struct RESULT_BYTE));
-			result->a = a;
-			result->b = b;
-			result->c = c;
-			int temp = a + b + c;
-			result->overflow = temp / 0x100;
-			// printf("[FOUND] : 0x%2x + 0x%2x + 0x%2x [OVER] : %d\n", a, b, c, temp / 0x100);
+				if (temp > target){
+					pointer = getMAX(&a, &b, &c);	
+					*pointer = *pointer - 1;
+				}else if(temp < target){
+					pointer = getMIN(&a, &b, &c);	
+					*pointer = *pointer + 1;
+				}else{
+					if (a < 20 || b < 20 || c < 20){
+						// 缠绕一圈
+						a += 85;
+				b += 85;
+					c += 86;
+					}
+					
+					struct RESULT_BYTE * result = malloc(sizeof(struct RESULT_BYTE));
+					result->a = a;
+					result->b = b;
+					result->c = c;
+					int temp = a + b + c;
+					result->overflow = temp / 0x100;
+					// printf("[FOUND] : 0x%2x + 0x%2x + 0x%2x [OVER] : %d\n", a, b, c, temp / 0x100);
 
-			return result;
-		}
+					return result;
+				}
 	}
 }
 
