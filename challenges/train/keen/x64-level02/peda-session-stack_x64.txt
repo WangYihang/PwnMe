@@ -1,0 +1,14 @@
+break *0x4006fa
+break execve
+
+
+
+
+
+
+
+
+
+
+
+
